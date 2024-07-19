@@ -1,0 +1,5 @@
+pydub
+speechrecognition
+transformers
+torch
+ffmpeg-python
