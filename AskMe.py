@@ -19,6 +19,9 @@ def recognize_speech(audio_file_path):
     return text
 
 def main():
-    audio_file_path = "sample.wav"
+    audio_file_path = "/Users/shanyu/Desktop/testing1.mp3"
     text = recognize_speech(audio_file_path)
     print("Trasnscibed Text: " + text)
+
+if __name__ == "__main__":
+    main()
