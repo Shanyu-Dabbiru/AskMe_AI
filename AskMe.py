@@ -28,19 +28,26 @@ def generate_question(user_input):
         tokens = tokens[-900:]
         user_input = tokenizer.convert_tokens_to_string(tokens)
 
-    prompt = f"Generate a nice question to ask someone who said: {user_input}"
+    prompt = f"Come up with a question to ask someone who said the following: {user_input}"
     input_ids = tokenizer.encode(prompt, return_tensors='pt')
-    output = model.generate(input_ids, max_length=50, num_return_sequences=1)
+
+    # Adjust the max_length to ensure it's within the model's limits
+    max_input_length = input_ids.shape[-1]
+    max_length = min(max_input_length + 50, 1024)
+
+    # Generate the output
+    output = model.generate(input_ids, max_length=max_length, num_return_sequences=1)
     question = tokenizer.decode(output[0], skip_special_tokens=True)
     return question
 
 def main():
     audio_file_path = "/Users/shanyu/Desktop/testing1.mp3"
     text = recognize_speech(audio_file_path)
-    print("Trasnscibed Text: " + text)
+    # print("Transcribed Text: " + text)
 
     # Generate a question based on the transcribed text
-    question = generate_question(text)
+    text1 = "I believe that the Earth is flat."
+    question = generate_question(text1)
     print(f"Generated Question: {question}")
 
 if __name__ == "__main__":
